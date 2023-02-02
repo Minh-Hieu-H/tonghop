@@ -24,7 +24,7 @@ tsc app.ts
 ## Cơ bản về TypeScript
 
 ### Basic Type
-```ts
+```typescript
 // booloean
 var isDone: boolean = true;
 // String

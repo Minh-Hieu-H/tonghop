@@ -18,7 +18,7 @@ let user1 : {
 }={
     name2:"Nguyễn Văn Nam"}
 // Array
-var arr1 :[number] = [1]
+var arr1 : number[] = [1]
 var arr2 = ["Hieu", 1]
 var arr3 = ["Hieu",2]
 let numberArr : number[] = [1,2,3,4]

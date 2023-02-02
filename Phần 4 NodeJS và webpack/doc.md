@@ -51,4 +51,4 @@ module.exports = {
 }
 ```
 Tương tự, đối với sass ta cần phải `yarn add sass sass-loader -D`, các bước tiếp theo thực hiện giống với file .css
-**Bài 3:** 2 bài trên config file CSS  và JS, phải chỉnh đường dẫn bằng tay. Trong bài này hãy config ra file HTML dựa trên 1 file HTML mẫu để khi build ra thu được file như mục ở trên nhá
+**Bài 3:** 2 bài trên config file CSS  và JS, phải chỉnh đường dẫn bằng tay. Trong bài này hãy config ra file HTML dựa trên 1 file HTML mẫu để khi build ra thu được file như mục ở trên

@@ -51,4 +51,13 @@ module.exports = {
 }
 ```
 Tương tự, đối với sass ta cần phải `yarn add sass sass-loader -D`, các bước tiếp theo thực hiện giống với file .css
-**Bài 3:** 2 bài trên config file CSS  và JS, phải chỉnh đường dẫn bằng tay. Trong bài này hãy config ra file HTML dựa trên 1 file HTML mẫu để khi build ra thu được file như mục ở trên
+
+**Bài 3:** 2 bài trên config file CSS  và JS, phải chỉnh đường dẫn bằng tay. Trong bài này hãy config ra file HTML dựa trên 1 file HTML mẫu để khi build ra thu được file như mục ở trên. Ta thêm plugin vào trong module export
+```js
+  plugins: [
+    new HtmlwebpackPlugin({
+      title: 'Webpack App',
+      filename: 'index.html',
+      template: 'src/template.html'
+    })
+```

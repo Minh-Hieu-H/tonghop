@@ -14,6 +14,21 @@
 2. Cấu hình webpack trong tệp cấu hình, thêm các quy tắc để sử dụng loader đã đặt
 3. Import CSS: Trong tập tin JS, `import` file .CSS
 4. Chạy Webpack để biên dịch
+## Sử dụng file HTML Webpack Plugin để tự động tạo ra file HTML
+* Vấn đề đặt ra : Khi build webpack chúng ta phải tự cấu hình các đường dẫn CSS, JS 1 cách thủ công. Ta cần thực hiện nó 1 cách tự động khi build webpack
+1. html-webpack-plugin sẽ giúp ta build ra 1 file html được cấu hình trong webpack
+2. Chạy câu lệnh yarn add html-webpack-plugin -D
+
+## Tách CSS ra các file riêng:
+* **Vấn đề đặt ra:** Khi ta dùng CSS đang được JS DOM thì dễ xảy ra tình trạng "chớp trắng" khi mới load trang
+* Tăng kích thước file JS
+* **Cách fix:**
+  
+  + Dùng `mini-css-extract-plugin` để tách nó thành những file riêng
+  + Chạy câu lệnh `yarn add mini-css-extract-plugin -D` để cài đặt 
+* **Lưu ý**:
+  + Phải đảm bảo đã dùng plugin `html-webpack-plugin`, vì nó cần plugin này để tự động generate ra thẻ `<link>`
+  + Không dùng plugin `style-loader` với `mini-css-extract-plugin`. Nếu đang dùng `style-loader` thì xóa nó đi, 2 cái này xung đột với nhau
 ## Các bài thực hành nhỏ
 **Bài 1 :** Cấu hình webpack ở mức cơ bản yêu cầu tạo ra 1 file chạy đoạn scirpt là 1 func ở mục Src
 Đối với bài tập 1: ta cấu hình lại file `webpack.config.js` như sau:
@@ -61,3 +76,5 @@ Tương tự, đối với sass ta cần phải `yarn add sass sass-loader -D`, 
       template: 'src/template.html'
     })
 ```
+
+**Bài 4:** Có 1 vấn đề nữa: Khi dùng webpack, tất cả đoạn code CSS sẽ được nén lại vào trong 1 file duy nhất --> điều này giúp giảm Request đến Server nhưng thay vào  các thuật toán nén sẽ khiến cho file càng được bảo mật. Cần khôi phục đoạn code CSS về tình trạng ban đầu, các file riêng

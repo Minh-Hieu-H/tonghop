@@ -45,6 +45,12 @@
   +  Tạo ra 1 web server trên môi trường production để test mã mà ko cần dùng đến Live Server trên VScode
   +  Để sử dụng chúng ta phải cài đặt `webpack-dev-server`: sử dụng câu lệnh `yarn add webpack-dev-server -D`
   +  Thêm Script vào sau `package.json`: `"start":"webpack serve"`
+
+## Dùng Source map cho webpack
+* **Vấn đề đặt ra:** : Sử dụng Sourcemap cho phép liên kết các file nguồn đã được biên dịch về file gốc của chúng.
+  + **Khuyên dùng** : Chỉ nên để `source-map` khi dev, còn khi build ra production thì disable nó vì nó sẽ để lộ đoạn code gốc
+  + webpack nhận các biến môi trường thông qua `--env` trong câu lệnh script khi chạy webpack. Vì thế ta cần thêm `"start":"webpack serve --env developement"`
+  + `module.exports` ở file `webpack.config.js` ngoài bằng 1 object thì nó còn có thể là 1 func với tham số là biến môi trường env
 ## Các bài thực hành nhỏ
 **Bài 1 :** Cấu hình webpack ở mức cơ bản yêu cầu tạo ra 1 file chạy đoạn scirpt là 1 func ở mục Src
 Đối với bài tập 1: ta cấu hình lại file `webpack.config.js` như sau:
@@ -135,3 +141,18 @@ Ta thêm 2 đoạn code tạo file_name của file .js và file .css trong sourc
         filename:'[name].[contenthash].css'
 ```
 **Bài 6:** Tạo 1 web Server đơn giản với webpack
+Ta cần thêm vào đoạn code 
+```js
+  devServer: {
+    static: {
+      directory: 'dist' // Đường dẫn tương đối đến với thư mục chứa index.html
+    },
+    port: 3000, // Port thay cho port mặc định (8080)
+    open: true, // Mở trang webpack khi chạy terminal
+    hot: true, // Bật tính năng reload nhanh Hot Module Replacement
+    compress: true, // Bật Gzip cho các tài nguyên
+    historyApiFallback: true // Set true nếu bạn dùng cho các SPA và sử dụng History API của HTML5
+  }
+}
+```
+**Bài7**

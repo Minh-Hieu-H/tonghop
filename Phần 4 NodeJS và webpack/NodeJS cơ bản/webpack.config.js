@@ -11,6 +11,7 @@ module.exports = (env) => {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].[contenthash].js'
     },
+    devtool: isDevelopement ? 'source-map':false,
     module: {
       rules: [
         {

@@ -29,6 +29,22 @@
 * **Lưu ý**:
   + Phải đảm bảo đã dùng plugin `html-webpack-plugin`, vì nó cần plugin này để tự động generate ra thẻ `<link>`
   + Không dùng plugin `style-loader` với `mini-css-extract-plugin`. Nếu đang dùng `style-loader` thì xóa nó đi, 2 cái này xung đột với nhau
+
+## Xử lý Caching ở trình duyệt bằng Hash name file 
+* **Vấn đề đặt ra**:
+  + Caching trong web là quá trình lưu trữ 1 bản sao tạm thời của tài nguyên(HTML, CSS, JS,...) trên máy tính của người dùng. Mục đích của Caching là **giảm tải cho server** mỗi lần load lại
+  + Mục đích của **hash name file**: Được sử dụng để giải quyết vấn đề về Caching. Khi 1 file bị thay đổi, hashname của file sẽ thay đổi theo, cho phép trình duyệt của người dùng nhận biết được file nào nó cần tải lại. Điều này giúp giảm số lần tài nguyên trùng lặp và tăng tốc độ truy cập
+
+## Dọn dẹp thư mục bằng 1 option của **output**
+* **Vấn đề đặt ra**: 
+  + Sau khi build webpack, sinh ra nhiều thư mục trong dist, và có cả phần không cần thiết
+  + Sử dụng thuộc tính output.clean =true
+
+## devServer cho webpack
+* **Vấn đề đặt ra:**
+  +  Tạo ra 1 web server trên môi trường production để test mã mà ko cần dùng đến Live Server trên VScode
+  +  Để sử dụng chúng ta phải cài đặt `webpack-dev-server`: sử dụng câu lệnh `yarn add webpack-dev-server -D`
+  +  Thêm Script vào sau `package.json`: `"start":"webpack serve"`
 ## Các bài thực hành nhỏ
 **Bài 1 :** Cấu hình webpack ở mức cơ bản yêu cầu tạo ra 1 file chạy đoạn scirpt là 1 func ở mục Src
 Đối với bài tập 1: ta cấu hình lại file `webpack.config.js` như sau:
@@ -78,3 +94,44 @@ Tương tự, đối với sass ta cần phải `yarn add sass sass-loader -D`, 
 ```
 
 **Bài 4:** Có 1 vấn đề nữa: Khi dùng webpack, tất cả đoạn code CSS sẽ được nén lại vào trong 1 file duy nhất --> điều này giúp giảm Request đến Server nhưng thay vào  các thuật toán nén sẽ khiến cho file càng được bảo mật. Cần khôi phục đoạn code CSS về tình trạng ban đầu, các file riêng
+```js
+  module:{
+    rules:[
+      {
+        test:/\.s[ac]ss|css$/,
+        use:[MiniCssExtractPlugin.loader
+          ,'css-loader','sass-loader']
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new HtmlwebpackPlugin({
+      title: 'Webpack App',
+      filename: 'index.html',
+      template: 'src/template.html'
+    })
+  ]
+```
+Trong phần use bỏ loader `style-loader` và thêm ... Tiếp theo ở trong plugin thêm vào `MiniCssExtractPlugin()`
+
+**Bài 5** : Xử lý vấn đề `caching ở trình duyệt bằng hash name file`. webpack cho phép chúng ta chỉnh sửa vấn đề này trong output.filename bằng `[contenthash]`
+Ta thêm 2 đoạn code tạo file_name của file .js và file .css trong sourcecode như sau 
+```js
+    filename: '[name].[contenthash].js'
+  },
+  module:{
+    rules:[
+      {
+        test:/\.s[ac]ss|css$/,
+        use:[MiniCssExtractPlugin.loader
+          ,'css-loader','sass-loader']
+      }
+    ]
+  },
+  plugins: [
+    new MiniCssExtractPlugin(
+      {
+        filename:'[name].[contenthash].css'
+```
+**Bài 6:** Tạo 1 web Server đơn giản với webpack
